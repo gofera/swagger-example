@@ -1,0 +1,48 @@
+openapi: 3.0.0
+info:
+  title: user.yml
+  version: '1.0'
+  contact:
+    name: Wen-Zhe Liu
+    email: wen-zhe.liu@asml.com
+  description: gAPI User service
+servers:
+  - url: 'https://gapi-brion-tw.asml.com/user'
+    description: User
+  - url: 'http://gapi-brion-tw.asml.com/user'
+    description: User
+paths:
+  /mail:
+    parameters: []
+    get:
+      summary: user mail
+      tags:
+        - mail
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                format: email
+                example: wen-zhe.liu@asml.com
+                description: email of the user id
+              examples:
+                example-1:
+                  value: wen-zhe.liu@asml.com
+        '500':
+          description: Internal Server Error
+      operationId: get-mail-by-user-id
+      description: Get email by user ID
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: id
+          description: user ID
+          required: true
+components:
+  schemas: {}
+tags:
+  - name: mail
