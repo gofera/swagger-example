@@ -42,6 +42,21 @@ paths:
           name: id
           description: user ID
           required: true
+  /mails:
+    get:
+      summary: Your GET endpoint
+      tags:
+        - mail
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                description: 'map: key is user id, value is email'
+      operationId: get-mails
+      description: get all mails
 components:
   schemas: {}
 tags:
