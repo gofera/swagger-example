@@ -42,9 +42,37 @@ paths:
           name: id
           description: user ID
           required: true
+    post:
+      summary: update user name and mail
+      operationId: update-user-name-and-mail
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                format: email
+                description: old email (the previous value)
+        '400':
+          description: Bad Request
+      description: update user name and mail
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserIDAndMail'
+            examples:
+              example-1:
+                value:
+                  id: weliu
+                  mail: wen-zhe.liu@asml.com
+        description: ''
+      tags:
+        - mail
   /mails:
     get:
-      summary: Your GET endpoint
+      summary: user mails list
       tags:
         - mail
       responses:
@@ -57,7 +85,64 @@ paths:
                 description: 'map: key is user id, value is email'
       operationId: get-mails
       description: get all mails
+  /name:
+    get:
+      summary: Get full name by user ID
+      tags:
+        - name
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                description: user full name
+              examples:
+                example-1:
+                  value: Wen-Zhe Liu
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+      operationId: get-user-full-name
+      description: Get full name by user ID or email
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: id
+          description: user ID
+        - schema:
+            type: string
+            format: email
+          in: query
+          name: mail
+          description: email
 components:
-  schemas: {}
+  schemas:
+    UserIDAndMail:
+      description: User ID and Email
+      type: object
+      properties:
+        id:
+          type: string
+          minLength: 1
+          description: User ID
+        mail:
+          type: string
+          minLength: 1
+          format: email
+          description: Email
+      required:
+        - id
+        - mail
+      x-examples:
+        example-1:
+          id: weliu
+          mail: wen-zhe.liu@asml.com
+      x-tags:
+        - mail
 tags:
   - name: mail
+  - name: name
